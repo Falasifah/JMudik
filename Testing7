@@ -1,0 +1,168 @@
+/**
+ * File name      : DispatchSchedulingBean.java
+ * Created on     : 
+ * Author         : 
+ * 
+ * Change Log:
+ * Author     Date           Version          Notes
+ * =========================================================================
+ * adi		 28 Aug 2014					Task #1927, tune middleware
+ * -------------------------------------------------------------------------
+ * adi		 02 Sep 2014					Fix middleware jobs,
+ * 											Task #2051 add retry update function
+ * -------------------------------------------------------------------------
+ **/
+
+package com.firstwap.middleware.ejb.scheduling;
+
+import com.firstwap.middleware.ejb.entity.SmsDispatcher;
+import com.firstwap.middleware.ejb.service.DispatcherService;
+import com.firstwap.middleware.helper.MessageIdGenerator;
+import com.firstwap.middleware.preference.DatabasePreference;
+import com.firstwap.middleware.preference.SmsDispatcherPreference;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
+import javax.persistence.PersistenceException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value="singleton")
+public class DispatchSchedulingBean implements SchedulingBean {
+	
+private static final Logger logger = LoggerFactory.getLogger(DispatchSchedulingBean.class);
+	
+	@Resource(mappedName = "java:/ConnectionFactory")
+	private ConnectionFactory connectionFactory;
+	
+	@Resource(mappedName = "java:/queue/dispatchQueue")
+	private Destination destination;
+	
+	@Autowired
+	private DispatcherService dispatcherService;
+	
+	private MessageIdGenerator generator = new MessageIdGenerator();
+
+	public void schedule() {
+		
+		Runnable releaseUnfinishedDispatchJob = new Runnable() {
+			public void run() {
+				logger.info("try release unfinished undispatched job");
+				dispatcherService.releaseUnfinishedDispatchJob();
+			}
+		};
+		executeRetryableUpdate(releaseUnfinishedDispatchJob);
+		
+		Runnable acquireSmsDispatcher = new Runnable() {
+			public void run() {
+				logger.info("try to acquire undispatch job");
+				dispatcherService.acquireSmsDispatcher();
+			}
+		};
+		executeRetryableUpdate(acquireSmsDispatcher);
+		
+		logger.debug("try to get undispatch job");
+		List<SmsDispatcher> list = dispatcherService.getUndispatchedMessages();
+		logger.info("running dispatch scheduler got {} messages", list.size());
+		
+		sendMessage(list);
+		logger.debug("dispatch scheduler finished");
+	}
+
+	private void sendMessage(List<SmsDispatcher> paramList) {
+		
+		Connection connection = null;
+		Session session = null;
+		MessageProducer producer = null;
+		
+		try {
+			
+			connection = this.connectionFactory.createConnection();
+			session = connection.createSession(true, 1);
+			connection.start();
+			producer = session.createProducer(this.destination);
+			Iterator<SmsDispatcher> localIterator = paramList.iterator();
+			
+			while (localIterator.hasNext()) {
+				
+				SmsDispatcher smsDispatcher = (SmsDispatcher) localIterator.next();
+				
+				logger.info("source {}, destination {}, smsdispId "+smsDispatcher.getID(), smsDispatcher.getSrc(), smsDispatcher.getDest());
+				
+				String queuedServerName = smsDispatcher.getServerName();
+				
+				if(SmsDispatcherPreference.SMS_QUEUED_SUFFIX!=null){
+					queuedServerName += SmsDispatcherPreference.SMS_QUEUED_SUFFIX;
+				}
+				
+				smsDispatcher.setServerName(queuedServerName);
+				dispatcherService.saveSmsDispacther(smsDispatcher);
+				
+				ObjectMessage objectMessage = session.createObjectMessage();
+				objectMessage.setObject(smsDispatcher);
+				producer.send(objectMessage);
+			}
+			
+			session.commit();
+			
+		} catch (JMSException e) {
+			
+			logger.error(e.getMessage(), e);
+			
+		} finally {
+			
+			try {
+				
+				if (connection != null)
+					connection.stop();
+				
+				if (producer != null)
+					producer.close();
+				
+				if (session != null)
+					session.close();
+				
+				if (connection != null)
+					connection.close();
+				
+			} catch (JMSException e) {
+				
+				logger.error(e.getMessage(), e);
+			}
+		}
+	}
+	
+	private void executeRetryableUpdate (Runnable updateTask){
+		boolean retry = true;
+		int retryCounter = 0;
+		while(retry){
+			try {
+				retry = false;
+				retryCounter++;
+				updateTask.run();
+			} catch (PersistenceException e) {
+				retry = retryCounter > DatabasePreference.UPDATE_MAX_RETRY?false:true;
+				logger.info("waiting lock...");
+				try {
+					Thread.sleep(DatabasePreference.UPDATE_WAIT_LOCK_MS);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+}
