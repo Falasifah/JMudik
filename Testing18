@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</Pattern>
+        </layout>
+    </appender>
+    
+    <appender name="middleware" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/logs/middleware/middleware.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory> 
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender> 
+    
+    <logger name="com.firstwap" level="INFO" additivity="false">
+        <appender-ref ref="middleware" />
+    </logger>
+    
+    <appender name="preference" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/logs/preference/preference[%d{yyyy-MM-dd}].log</fileNamePattern>
+            <maxHistory>30</maxHistory> 
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    
+    
+    <logger name="preference.com.firstwap" level="DEBUG">
+        <appender-ref ref="preference" />        
+    </logger>
+    
+    <root level="OFF">
+        <appender-ref ref="console" />
+    </root>
+    
+</configuration>
