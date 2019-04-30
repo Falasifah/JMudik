@@ -1,0 +1,58 @@
+package com.firstwap.middleware.ejb.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "OPERATOR_DIAL_PREFIX")
+@IdClass(OperatorDialPrefixId.class)
+public class OperatorDialPrefix implements Serializable {
+
+	private static final long serialVersionUID = 684812931147684382L;
+	
+	private String opCountryCode;
+	private String opId;
+	private String opDialRangeLower;
+	private String opDialRangeUpper;
+
+	@Column(name = "OP_COUNTRY_CODE")
+	public String getOpCountryCode() {
+		return opCountryCode;
+	}
+
+	public void setOpCountryCode(String opCountryCode) {
+		this.opCountryCode = opCountryCode;
+	}
+
+	@Id
+	public String getOpDialRangeLower() {
+		return opDialRangeLower;
+	}
+
+	public void setOpDialRangeLower(String opDialRangeLower) {
+		this.opDialRangeLower = opDialRangeLower;
+	}
+
+	@Id
+	public String getOpDialRangeUpper() {
+		return opDialRangeUpper;
+	}
+
+	public void setOpDialRangeUpper(String opDialRangeUpper) {
+		this.opDialRangeUpper = opDialRangeUpper;
+	}
+
+	@Column(name = "OP_ID")
+	public String getOpId() {
+		return opId;
+	}
+
+	public void setOpId(String opId) {
+		this.opId = opId;
+	}
+}
