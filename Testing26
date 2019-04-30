@@ -1,0 +1,56 @@
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    runtime 'antlr:antlr:2.7.6'
+    runtime 'aopalliance:aopalliance:1.0'
+    runtime(group: 'commons-beanutils', name: 'commons-beanutils', version: '1.7.0')
+    runtime(group: 'commons-codec', name: 'commons-codec', version: '1.1')
+    runtime(group: 'commons-collections', name: 'commons-collections', version: '3.2.2')
+    runtime(group: 'dom4j', name: 'dom4j', version: '1.6.1')
+    runtime(group: 'net.sf.ehcache', name: 'ehcache', version: '1.5.0')
+    compile(group: 'org.hibernate', name: 'hibernate-entitymanager', version: '3.4.0.GA'){
+        transitive = false
+    }
+    compile(group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api', version: '1.0.1.Final')
+    compile(group: 'org.hibernate', name: 'hibernate', version: '3.6.7'){
+        transitive = false
+    }
+    runtime(group: 'javassist', name: 'javassist', version: '3.12.0.GA')
+    compile(group: 'org.jboss.spec.javax.ejb', name: 'jboss-ejb-api_3.1_spec', version: '1.0.1.Final')
+    compile(group: 'org.jboss.spec.javax.jms', name: 'jboss-jms-api_1.1_spec', version: '1.0.0.Final')
+    runtime(group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.6.4')
+    compile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.0')
+    compile(group: 'ch.qos.logback', name: 'logback-core', version: '1.1.0')
+    compile(group: 'mysql', name: 'mysql-connector-java', version: '5.1.6')
+    compile(group: 'log4j', name: 'log4j', version: '1.2.17')
+    runtime(group: 'com.microsoft', name: 'sqljdbc-sqlserver', version: '3.0')
+    providedCompile 'javax.servlet:servlet-api:2.5'
+    compile(group: 'org.springframework', name: 'org.springframework.aop', version: '3.1.1.RELEASE'){
+        transitive = false
+    }
+    compile(group: 'org.springframework', name: 'org.springframework.aspects', version: '3.1.1.RELEASE')
+    compile(group: 'org.springframework', name: 'org.springframework.transaction', version: '3.1.1.RELEASE'){
+        transitive = false
+    }
+    compile(group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.1.1.RELEASE') {
+        exclude group: 'org.springframework', module: 'org.springframework.transaction'
+    }
+    compile(group: 'org.springframework', name: 'spring-jms', version: '3.1.1.RELEASE'){
+        transitive = false
+    }
+    compile(group: 'org.springframework', name: 'org.springframework.orm', version: '3.1.1.RELEASE')
+
+    compile(group: 'org.springframework', name: 'org.springframework.web', version: '3.1.1.RELEASE') {
+        exclude group: 'org.aopalliance', module: 'com.springsource.org.aopalliance'
+    }
+    compile(group: 'org.springframework', name: 'org.springframework.web.servlet', version: '3.1.1.RELEASE') {
+        exclude group: 'org.springframework', module: 'org.springframework.web'
+    }
+    compile(group: 'opensymphony', name: 'quartz', version: '1.6.3')
+    testCompile 'junit:junit:4.10'
+	compile(group: 'com.jolbox', name: 'bonecp', version: '0.7.1.RELEASE')
+}
+
+test { systemProperties 'property': 'value' }
