@@ -1,0 +1,175 @@
+/**
+ * File name      : SmsDispatcherPreference.java
+ * Created on     : 
+ * Author         : 
+ * 
+ * Change Log:
+ * Author     Date           Version          Notes
+ * =========================================================================
+ * adi		 02 Sep 2014					Fix middleware jobs
+ * -------------------------------------------------------------------------
+ **/
+
+package com.firstwap.middleware.preference;
+
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public final class SmsDispatcherPreference extends LoggerPreference {
+
+	private static final long serialVersionUID = -1563665418011517111L;
+		
+
+	public static String HOST_QUEUE_LATIN ;
+	public static int PORT_QUEUE_LATIN ;
+	public static String HOST_QUEUE_UNICODE ;
+	public static int PORT_QUEUE_UNICODE ;
+	public static int DISPATCH_LIMIT ;
+	public static int DELIVERY_LIMIT ;
+	public static String SERVER_NAME ;
+	public static int JOB_THRESHOLD;
+	public static int DELIVERY_EXPIRED_MINUTES;
+	public static boolean ALFASENDER_FORMATTING;
+	public static String ALFASENDER_ADDITIONALCHAR;
+	public static String SMS_QUEUED_SUFFIX;
+	public static boolean USE_COBRANDER;
+	public static String COBRANDER_NAME;
+	public static String MOBILETRAX_SERVICEID;
+	public static String MOBILETRAX_REPLYPATH;
+	public static String MOBILETRAX_ALPHAFLAG;
+	public static int GSM0338_CHARSET;
+		
+	@Value("${senderformating}")
+	private  void setALFASENDER_FORMATTING(String ALFASENDER_FORMATTING) {
+		this.ALFASENDER_FORMATTING = Boolean.valueOf(ALFASENDER_FORMATTING);
+	}
+	
+	@Value("${senderadditionalchar}")
+	private  void setALFASENDER_ADDITIONALCHAR(String ALFASENDER_ADDITIONALCHAR) {
+		this.ALFASENDER_ADDITIONALCHAR = ALFASENDER_ADDITIONALCHAR;
+	}
+	
+	@Value("${servername}")
+	private  void setSERVER_NAME(String SERVER_NAME) {
+		this.SERVER_NAME = SERVER_NAME;
+	}
+	@Value("${jobthreshold}")
+	private  void setJOB_THRESHOLD(int JOB_THRESHOLD) {
+		this.JOB_THRESHOLD = JOB_THRESHOLD;
+	}
+	@Value("${deliveryexpiredminutes:2880}")
+	private  void setDELIVERY_EXPIRED_MINUTES(int DELIVERY_EXPIRED_MINUTES) {
+		this.DELIVERY_EXPIRED_MINUTES = DELIVERY_EXPIRED_MINUTES;
+	}
+
+	@Value("${hostqueuelatin}")
+	private  void setHOST_QUEUE_LATIN(String hOST_QUEUE_LATIN) {
+		HOST_QUEUE_LATIN = hOST_QUEUE_LATIN;
+	}
+	
+	@Value("${portqueuelatin}")
+	private  void setPORT_QUEUE_LATIN(int pORT_QUEUE_LATIN) {
+		PORT_QUEUE_LATIN = pORT_QUEUE_LATIN;
+	}
+
+	@Value("${hostqueueunicode}")
+	private  void setHOST_QUEUE_UNICODE(String hOST_QUEUE_UNICODE) {
+		HOST_QUEUE_UNICODE = hOST_QUEUE_UNICODE;
+	}
+
+	@Value("${portqueueunicode}")
+	private  void setPORT_QUEUE_UNICODE(int pORT_QUEUE_UNICODE) {
+		PORT_QUEUE_UNICODE = pORT_QUEUE_UNICODE;
+	}
+
+	@Value("${dispatchlimit}")
+	private  void setDISPATCH_LIMIT(int dISPATCH_LIMIT) {
+		DISPATCH_LIMIT = dISPATCH_LIMIT;
+	}
+
+	@Value("${deliverylimit}")
+	private  void setDELIVERY_LIMIT(int dELIVERY_LIMIT) {
+		DELIVERY_LIMIT = dELIVERY_LIMIT;
+	}
+	
+	@Value("${smsQueuedSuffix:|QUEUED}")
+	private  void setSMS_QUEUED_SUFFIX(String sMS_QUEUED_SUFFIX) {
+		SMS_QUEUED_SUFFIX = sMS_QUEUED_SUFFIX;
+	}
+	
+	@SuppressWarnings("static-access")
+	@Value("${use.cobrander:false}")
+	private void setUSE_COBRANDER(String USE_COBRANDER)
+	{
+		this.USE_COBRANDER = Boolean.valueOf(USE_COBRANDER);
+	}
+	
+	@SuppressWarnings("static-access")
+	@Value("${cobrander.name:}")
+	private void setCOBRANDER_NAME(String COBRANDER_NAME)
+	{
+		this.COBRANDER_NAME = COBRANDER_NAME;
+	}
+	
+	@SuppressWarnings("static-access")
+	@Value("${mobiletrax.serviceid.name:}")
+	private void setMOBILETRAX_SERVICEID(String MOBILETRAX_SERVICEID) 
+	{
+		this.MOBILETRAX_SERVICEID = MOBILETRAX_SERVICEID;
+	}
+	
+	@SuppressWarnings("static-access")
+	@Value("${mobiletrax.replypath:0}")
+	private void setMOBILETRAX_REPLYPATH(String MOBILETRAX_REPLYPATH) 
+	{
+		this.MOBILETRAX_REPLYPATH = MOBILETRAX_REPLYPATH;
+	}
+	
+	@SuppressWarnings("static-access")
+	@Value("${mobiletrax.alphaflag:2}")
+	private void setMOBILETRAX_ALPHAFLAG(String MOBILETRAX_ALPHAFLAG) 
+	{
+		this.MOBILETRAX_ALPHAFLAG = MOBILETRAX_ALPHAFLAG;
+	}
+	
+	@Value("${GSM0338.Charset:0}")
+	private static void setGSM0338_CHARSET(int gSM0338_CHARSET) {
+		GSM0338_CHARSET = gSM0338_CHARSET;
+	}
+
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder();
+		builder.append("Middleware Smsdispatcher preference[HOST_QUEUE_LATIN= ");
+		builder.append(HOST_QUEUE_LATIN) ;
+		builder.append(", PORT_QUEUE_LATIN=");
+		builder.append(PORT_QUEUE_LATIN);		
+		builder.append(", HOST_QUEUE_UNICODE=") ;
+		builder.append(HOST_QUEUE_UNICODE);
+		builder.append(", PORT_QUEUE_UNICODE=") ;
+		builder.append(PORT_QUEUE_UNICODE);
+		builder.append(", DISPATCH_LIMIT=");
+		builder.append(DISPATCH_LIMIT);
+		builder.append(", DELIVERY_LIMIT=");
+		builder.append(DELIVERY_LIMIT);
+		builder.append(", SMS_QUEUED_SUFFIX=");
+		builder.append(SMS_QUEUED_SUFFIX);
+		builder.append(", USE_COBRANDER=");
+		builder.append(USE_COBRANDER);
+		builder.append(", COBRANDER_NAME=");
+		builder.append(COBRANDER_NAME);
+		builder.append(", MOBILETRAX_SERVICEID=");
+		builder.append(MOBILETRAX_SERVICEID);
+		builder.append(", MOBILETRAX_REPLYPATH=");
+		builder.append(MOBILETRAX_REPLYPATH);
+		builder.append(", MOBILETRAX_ALPHAFLAG=");
+		builder.append(MOBILETRAX_ALPHAFLAG);
+		return builder.toString();
+	}
+	
+	
+	
+	
+}
