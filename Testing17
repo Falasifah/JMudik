@@ -1,0 +1,180 @@
+package com.firstwap.middleware.util;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class GSM0338Charset {
+	
+	private Map<Character, Integer> selectedMap;
+	
+	public GSM0338Charset(int selectedCharset){
+		switch(selectedCharset){
+			case Constants.GSM0338_BASIC_CHARSET:  selectedMap = initBasicCharset(); break; 
+		}
+	}
+	
+	public boolean isGsmSeven(char character){
+		if(selectedMap.get(character) == null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public Map<Character, Integer> initBasicCharset(){
+		Map<Character, Integer> basicChar = new HashMap<>();
+		
+		basicChar.put('@', 1);
+		basicChar.put('£', 1);	
+		basicChar.put('$', 1);
+		basicChar.put('¥', 1);
+		basicChar.put('è', 1);
+		basicChar.put('é', 1);
+		basicChar.put('ù', 1);
+		basicChar.put('ì', 1);
+		basicChar.put('ò', 1);
+		basicChar.put('Ç', 1);
+		basicChar.put('\n', 1);
+		basicChar.put('Ø', 1);
+		basicChar.put('ø', 1);
+		basicChar.put('\r', 1);
+		basicChar.put('Å', 1);
+		basicChar.put('å', 1);
+		
+		basicChar.put('Δ', 1);
+		basicChar.put('_', 1);
+		basicChar.put('Φ', 1);
+		basicChar.put('Γ', 1);
+		basicChar.put('Λ', 1);
+		basicChar.put('Ω', 1);
+		basicChar.put('Π', 1);
+		basicChar.put('Ψ', 1);
+		basicChar.put('Σ', 1);
+		basicChar.put('Θ', 1);
+		basicChar.put('Ξ', 1);
+		basicChar.put('\u001B', 1);
+		basicChar.put('Æ', 1);
+		basicChar.put('æ', 1);
+		basicChar.put('ß', 1);
+		basicChar.put('É', 1);
+		
+		basicChar.put('\u0020', 1);
+		basicChar.put('!', 1);
+		basicChar.put('"', 1);
+		basicChar.put('\"', 1);
+		basicChar.put('#', 1);
+		basicChar.put('¤', 1);
+		basicChar.put('%', 1);
+		basicChar.put('&', 1);
+		basicChar.put('\'', 1);
+		basicChar.put('(', 1);
+		basicChar.put(')', 1);
+		basicChar.put('*', 1);
+		basicChar.put('+', 1);
+		basicChar.put(',', 1);
+		basicChar.put('-', 1);
+		basicChar.put('.', 1);
+		basicChar.put('/', 1);
+		
+		basicChar.put('0', 1);
+		basicChar.put('1', 1);
+		basicChar.put('2', 1);
+		basicChar.put('3', 1);
+		basicChar.put('4', 1);
+		basicChar.put('5', 1);
+		basicChar.put('6', 1);
+		basicChar.put('7', 1);
+		basicChar.put('8', 1);
+		basicChar.put('9', 1);
+		basicChar.put(':', 1);
+		basicChar.put(';', 1);
+		basicChar.put('<', 1);
+		basicChar.put('=', 1);
+		basicChar.put('>', 1);
+		basicChar.put('?', 1);
+		
+		basicChar.put('¡', 1);
+		basicChar.put('A', 1);
+		basicChar.put('B', 1);
+		basicChar.put('C', 1);
+		basicChar.put('D', 1);
+		basicChar.put('E', 1);
+		basicChar.put('F', 1);
+		basicChar.put('G', 1);
+		basicChar.put('H', 1);
+		basicChar.put('I', 1);
+		basicChar.put('J', 1);
+		basicChar.put('K', 1);
+		basicChar.put('L', 1);
+		basicChar.put('M', 1);
+		basicChar.put('N', 1);
+		basicChar.put('O', 1);
+		
+		basicChar.put('P', 1);
+		basicChar.put('Q', 1);
+		basicChar.put('R', 1);
+		basicChar.put('S', 1);
+		basicChar.put('T', 1);
+		basicChar.put('U', 1);
+		basicChar.put('V', 1);
+		basicChar.put('W', 1);
+		basicChar.put('X', 1);
+		basicChar.put('Y', 1);
+		basicChar.put('Z', 1);
+		basicChar.put('Ä', 1);
+		basicChar.put('Ö', 1);
+		basicChar.put('Ñ', 1);
+		basicChar.put('Ü', 1);
+		basicChar.put('§', 1);
+		
+		basicChar.put('¿', 1);
+		basicChar.put('a', 1);
+		basicChar.put('b', 1);
+		basicChar.put('c', 1);
+		basicChar.put('d', 1);
+		basicChar.put('e', 1);
+		basicChar.put('f', 1);
+		basicChar.put('g', 1);
+		basicChar.put('h', 1);
+		basicChar.put('i', 1);
+		basicChar.put('j', 1);
+		basicChar.put('k', 1);
+		basicChar.put('l', 1);
+		basicChar.put('m', 1);
+		basicChar.put('n', 1);
+		basicChar.put('o', 1);
+		
+		basicChar.put('p', 1);
+		basicChar.put('q', 1);
+		basicChar.put('r', 1);
+		basicChar.put('s', 1);
+		basicChar.put('t', 1);
+		basicChar.put('u', 1);
+		basicChar.put('v', 1);
+		basicChar.put('w', 1);
+		basicChar.put('x', 1);
+		basicChar.put('y', 1);
+		basicChar.put('z', 1);
+		basicChar.put('ä', 1);
+		basicChar.put('ö', 1);
+		basicChar.put('ñ', 1);
+		basicChar.put('ü', 1);
+		basicChar.put('à', 1);
+		
+		basicChar.put('^', 1);
+		basicChar.put('{', 1);
+		basicChar.put('}', 1);
+		basicChar.put('\\', 1);
+		basicChar.put('[', 1);
+		basicChar.put('~', 1);
+		basicChar.put(']', 1);
+		basicChar.put('|', 1);
+		basicChar.put('€', 1);
+		basicChar.put('\t', 1);
+		basicChar.put('\b', 1);
+		basicChar.put('\f', 1);
+		
+		return basicChar;
+	}
+
+}
