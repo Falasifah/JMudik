@@ -1,0 +1,16 @@
+package com.firstwap.middleware.preference;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+
+public abstract class LoggerPreference {
+
+	public Logger logger = LoggerFactory.getLogger("preference."+this.getClass().getName());
+	
+	public void logProperties(){
+		logger.debug(this.toString());
+	}
+
+}
