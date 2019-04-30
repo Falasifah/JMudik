@@ -1,0 +1,114 @@
+package com.firstwap.middleware.ejb.entity;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USER_MESSAGE_STATUS")
+public class UserMessageStatus implements Serializable {
+
+	private static final long serialVersionUID = -281846906886867933L;
+	
+	private String messageId;
+	private String userId;
+	private String sender;
+	private String destination;
+	private Timestamp sendDatetime;
+	private String messageStatus;
+	private Timestamp statusDatetime;
+	private long id;
+
+	@Column(name = "DESTINATION")
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Column(name = "MESSAGE_ID")
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
+
+	@Column(name = "MESSAGE_STATUS")
+	public String getMessageStatus() {
+		return messageStatus;
+	}
+
+	public void setMessageStatus(String messageStatus) {
+		this.messageStatus = messageStatus;
+	}
+
+	@Column(name = "SEND_DATETIME")
+	public Timestamp getSendDatetime() {
+		return sendDatetime;
+	}
+
+	public void setSendDatetime(Timestamp sendDatetime) {
+		this.sendDatetime = sendDatetime;
+	}
+
+	@Column(name = "SENDER")
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	@Column(name = "STATUS_DATETIME")
+	public Timestamp getStatusDatetime() {
+		return statusDatetime;
+	}
+
+	public void setStatusDatetime(Timestamp statusDatetime) {
+		this.statusDatetime = statusDatetime;
+	}
+
+	@Column(name = "USER_ID")
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	@Override
+	public String toString() {
+		return "[ID=" + id + "," + "MsgID=" + messageId + "]";
+	}
+
+	/**
+	 * constructor
+	 * 
+	 */
+	public UserMessageStatus() {
+	}
+
+}
