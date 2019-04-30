@@ -1,0 +1,20 @@
+# this is the properties of sms dispatcher
+hostqueuelatin=${global.queue.address}
+portqueuelatin=${global.qlatin.port}
+hostqueueunicode=${global.queue.address}
+portqueueunicode=${global.qunicode.port}
+
+dispatchlimit=100
+deliverylimit=100
+
+servername=MIDSERV-1
+jobthreshold=600
+
+senderformating=true
+senderadditionalchar=A
+
+use.cobrander=false
+cobrander.name=
+mobiletrax.serviceid.name=
+mobiletrax.replypath=0
+mobiletrax.alphaflag=2
