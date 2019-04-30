@@ -1,0 +1,164 @@
+package com.firstwap.middleware.preference;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public abstract class DefaultPreference implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+    protected String configDirPath;
+    
+    protected Properties properties;
+    
+    protected Logger log = LoggerFactory.getLogger(getClass());
+
+    public DefaultPreference() {
+        
+        this(null);
+    }
+
+    public DefaultPreference(String configDirPath) {
+        
+        this.configDirPath = configDirPath;
+        
+        init();
+    }
+
+    public Properties getProperties() {
+        
+        return properties;
+    }
+    
+    protected void init() {
+        
+        try {
+            
+            properties = new Properties();
+            InputStream inputStream = getInputStream();
+            properties.load(inputStream);
+            inputStream.close();
+            
+        } catch (Exception e) {
+            
+            log.error(e.getMessage(), e);
+        }
+    }
+    
+    protected String getConfigDirPath() {
+        
+        if (configDirPath != null) {
+            
+            return configDirPath;
+        }
+        
+        configDirPath = System.getProperty("default.config.dir");
+        
+        if (configDirPath.startsWith("#")) {
+            
+            configDirPath = System.getProperty(configDirPath.substring(1));
+        }
+        
+        if (configDirPath != null) {
+            
+            return configDirPath;
+        }
+        
+        return "";
+    }
+
+    protected abstract String getFileName();
+
+    protected File getFile() {
+        
+        File file = new File(getConfigDirPath() + File.separator + getFileName());
+        
+        if (!file.exists()) {
+            
+            file = new File(getFileName());
+        }
+        
+        return file;
+    }
+    
+    protected InputStream getInputStream() throws IOException {
+        
+        return new FileInputStream(getFile());
+    }
+
+    public long getLong(String key) {
+        
+        return Long.parseLong(getString(key));
+    }
+
+    public double getDouble(String key) {
+        
+        return Double.parseDouble(getString(key));
+    }
+
+    public int getInt(String key) {
+        
+        return Integer.parseInt(getString(key));
+    }
+
+    public int getInt(String key, int defaultValue) {
+        
+        int result = 0;
+        
+        if (properties.getProperty(key) != null) {
+            
+            result = Integer.parseInt(properties.getProperty(key).trim());
+            
+        } else if (defaultValue != 0) {
+            
+            result = defaultValue;
+        }
+        
+        return result;
+    }
+
+    public String getString(String key) {
+        
+        return getString(key, null);
+    }
+
+    public String getString(String key, String defaultValue) {
+        
+        String result = "";
+        
+        if (properties.getProperty(key) != null) {
+            
+            result = properties.getProperty(key).trim();
+            
+        } else if (defaultValue != null) {
+            
+            result = defaultValue;
+        }
+        
+        return result;
+    }
+
+    public boolean getBoolean(String key) {
+        
+        return Boolean.parseBoolean(getString(key));
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        
+        boolean result = defaultValue;
+        
+        if (properties.getProperty(key) != null) {
+            
+            result = Boolean.parseBoolean(getString(key));
+        }
+        
+        return result;
+    }
+}
