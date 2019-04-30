@@ -1,0 +1,140 @@
+/* * * * * Versions used of 3rd Party Libraries * * * * */
+        versionAopalliance                  = '1.0'             //  aopalliance:aopalliance
+        versionOpencsv                      = '2.4'             //  au.com.bytecode:opencsv
+        versionBackportUtilConcurrent       = '3.1'             //  backport-util-concurrent:backport-util-concurrent
+        versionBcprovJdk16                  = '1.46'            //  bouncycastle:bcprov-jdk16
+        versionCglib                        = '3.2.10'          //  cglib:cglib
+        versionLogback                      = '1.2.3'           //  ch.qos.logback:logback-classic, ch.qos.logback:logback-core
+        versionFonts                        = '1.0'             //  com.1rstwap:fonts, com.1rstwap:fonts-Arial, com.1rstwap:fonts-Helvetica, com.1rstwap:fonts-LucidaSans
+        versionNumberingplanCache           = '1.0'             //  com.1rstwap:numberingplan-cache
+        versionServer                       = '1.0.0'           //  com.1rstwap:server
+        versionSsoclient                    = '1.5.4'           //  com.1rstwap:ssoclient
+        versionAltamidestab                 = '1.1'             //  com.1rstwap.altamides:altamidestab
+        versionAudittrax                    = '1.1'             //  com.1rstwap.altamides:audittrax
+        versionReporterConfig3              = '3.2.2'           //  com.addthis.metrics:reporter-config3
+        versionCassandraDriverCore          = '3.7.1'           //  com.datastax.cassandra:cassandra-driver-core, com.datastax.cassandra:cassandra-driver-extras,
+                                                                //  com.datastax.cassandra:cassandra-driver-mapping
+        versionSparkCassandraConnector211   = '2.4.1'           //  com.datastax.spark:spark-cassandra-connector_2.11
+        versionEnc                          = '1.0'             //  com.etisalat:Enc
+        versionJackson                      = '2.9.8'           //  com.fasterxml.jackson.core:jackson-annotations, com.fasterxml.jackson.core:jackson-core,
+                                                                //  com.fasterxml.jackson.core:jackson-databind, com.fasterxml.jackson.dataformat:jackson-dataformat-xml,
+                                                                //  com.fasterxml.jackson.module:jackson-module-scala_2.11
+        versionGsonJodatimeSerialisers      = '1.7.1'           //  com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers
+        versionKaptcha                      = '2.3.2'           //  com.google.code:kaptcha
+        versionGson                         = '2.8.5'           //  com.google.code.gson:gson
+        versionCommonsJavaflow              = '1590792'         //  com.google.code.maven-play-plugin.org.apache.commons:commons-javaflow
+        versionScriptenginesJavascript      = '1.1.1'           //  com.google.code.scriptengines:scriptengines-javascript
+        versionGuava                        = '27.1-jre'        //  com.google.guava:guava
+        versionIcu4j                        = '63.1'            //  com.ibm.icu:icu4j
+        versionItextpdf                     = '5.5.13'          //  com.itextpdf:itextpdf
+        versionDropwizardMetricsInfluxdb    = '1.2.3'           //  com.izettle:dropwizard-metrics-influxdb
+        versionJsonPath                     = '2.4.0'           //  com.jayway.jsonpath:json-path
+        versionBonecp                       = '0.8.0.RELEASE'   //  com.jolbox:bonecp
+        versionC3p0                         = '0.9.5.3'         //  com.mchange:c3p0
+        versionSqljdbcSqlserver             = '3.0'             //  com.microsoft:sqljdbc-sqlserver
+        versionOpencsv                      = '4.5'             //  com.opencsv:opencsv
+        versionElsql                        = '1.3'             //  com.opengamma:elsql
+        versionAmqpClient                   = '5.6.0'           //  com.rabbitmq:amqp-client
+        versionSunMail                      = '1.6.3'           //  com.sun.mail:mailapi, com.sun.mail:smtp
+        versionAkka                         = '2.5.21'          //  com.typesafe.akka:akka-actor_2.12, com.typesafe.akka:akka-testkit_2.12
+        versionHikaricp                     = '3.3.1'           //  com.zaxxer:HikariCP
+        versionCommonsBeanutils             = '1.9.3'           //  commons-beanutils:commons-beanutils
+        versionCommonsCodec                 = '1.12'            //  commons-codec:commons-codec
+        versionCommonsDiscovery             = '0.5'             //  commons-discovery:commons-discovery
+        versionCommonsIo                    = '2.6'             //  commons-io:commons-io
+        versionCommonsLogging               = '1.2'             //  commons-logging:commons-logging
+        versionGeojsonJackson               = '1.8.1'           //  de.grundid.opendatalab:geojson-jackson
+        versionDom4j                        = '1.6.1'           //  dom4j:dom4j
+        versionMetrics                      = '4.1.0-rc3'       //  io.dropwizard.metrics:metrics-core, io.dropwizard.metrics:metrics-jvm
+        versionMicrometerSpringLegacy       = '1.1.3'           //  io.micrometer:micrometer-spring-legacy
+        versionNetty                        = '4.1.34.Final'    //  io.netty:netty-all, io.netty:netty-codec, io.netty:netty-handler, io.netty:netty-transport
+        versionReactor                      = '2.0.8.RELEASE'   //  io.projectreactor:reactor-bus, io.projectreactor:reactor-stream
+        versionSimpleclient                 = '0.6.0'           //  io.prometheus:simpleclient_dropwizard, io.prometheus:simpleclient_hotspot, io.prometheus:simpleclient_servlet,
+                                                                //  io.prometheus:simpleclient_spring_boot
+        versionVavr                         = '0.10.0'          //  io.vavr:vavr
+        versionActivation                   = '1.1.1'           //  javax.activation:activation
+        versionJavaxElApi                   = '3.0.1-b06'       //  javax.el:javax.el-api
+        versionJavaxMailApi                 = '1.6.2'           //  javax.mail:javax.mail-api
+        versionJavaxServletApi              = '4.0.1'           //  javax.servlet:javax.servlet-api
+        versionJstlApi                      = '1.2'             //  javax.servlet.jsp.jstl:jstl-api
+        versionJta                          = '1.1'             //  javax.transaction:jta
+        versionJaxrpcApi                    = '1.1'             //  javax.xml:jaxrpc-api
+        versionJodaTime                     = '2.10.1'          //  joda-time:joda-time
+        versionJgcl                         = '1.0'             //  jp.go.ipa:jgcl
+        versionMysqlConnectorJava           = '8.0.15'          //  mysql:mysql-connector-java
+        versionJna                          = '5.2.0'           //  net.java.dev.jna:jna
+        versionFlexjson                     = '3.3'             //  net.sf.flexjson:flexjson
+        versionJasperreports                = '6.7.1'           //  net.sf.jasperreports:jasperreports
+        versionSitemesh                     = '2.4.2'           //  opensymphony:sitemesh
+        versionAcegiSecurity                = '1.0.7'           //  org.acegisecurity:acegi-security
+        versionAntlr4                       = '4.7.2'           //  org.antlr:antlr4
+        versionAxis                         = '1.4'             //  org.apache.axis:axis
+        versionCamel                        = '3.0.0-M1'        //  org.apache.camel:apt, org.apache.camel:camel-core, org.apache.camel:camel-csv,
+                                                                //  org.apache.camel:camel-rabbitmq, org.apache.camel:camel-spring-boot, org.apache.camel:camel-stream,
+                                                                //  org.apache.camel:spi-annotations
+        versionCommonsCollections4          = '4.3'             //  org.apache.commons:commons-collections4
+        versionCommonsConfiguration2        = '2.4'             //  org.apache.commons:commons-configuration2
+        versionCommonsCsv                   = '1.6'             //  org.apache.commons:commons-csv
+        versionCommonsDbcp2                 = '2.6.0'           //  org.apache.commons:commons-dbcp2
+        versionCommonsDigester3             = '3.2'             //  org.apache.commons:commons-digester3
+        versionCommonsLang3                 = '3.8.1'           //  org.apache.commons:commons-lang3
+        versionCommonsPool2                 = '2.6.1'           //  org.apache.commons:commons-pool2
+        versionHttpclient                   = '4.5.7'           //  org.apache.httpcomponents:httpclient
+        versionHttpcore                     = '4.4.11'          //  org.apache.httpcomponents:httpcore
+        versionLog4jCore                    = '2.11.2'          //  org.apache.logging.log4j:log4j-core, org.apache.logging.log4j:log4j-1.2-api
+        versionPoi                          = '4.0.1'           //  org.apache.poi:poi
+        versionSpark                        = '2.4.0'           //  org.apache.spark:spark-core_2.12, org.apache.spark:spark-sql_2.12
+        versionAspect                       = '1.9.3.RC1'       //  org.aspectj:aspectjrt, org.aspectj:aspectjweaver
+        versionAssertjCore                  = '3.12.2'          //  org.assertj:assertj-core
+        versionAsyncHttpClient              = '2.8.1'           //  org.asynchttpclient:async-http-client
+        versionJanino                       = '3.0.12'          //  org.codehaus.janino:commons-compiler, org.codehaus.janino:janino
+        versionConvexhull                   = '1.0'             //  org.convexhull:ConvexHull
+        versionEasymock                     = '4.0.2'           //  org.easymock:easymock
+        versionJavaxPersistence             = '2.2.1'           //  org.eclipse.persistence:javax.persistence
+        versionEhcache                      = '3.7.0'           //  org.ehcache:ehcache
+        versionElasticsearchSpark20_211     = '6.6.1'           //  org.elasticsearch:elasticsearch-spark-20_2.11
+        versionFlywayDbunitSpring4Test      = '5.2.1'           //  org.flywaydb.flyway-test-extensions:flyway-dbunit-spring4-test
+        versionGst1JavaCore                 = '0.9.4'           //  org.freedesktop.gstreamer:gst1-java-core
+        versionFreemarker                   = '2.3.28'          //  org.freemarker:freemarker
+        versionJstlImpl                     = '1.2'             //  org.glassfish.web:jstl-impl
+        versionHibernateCore                = '5.4.1.Final'     //  org.hibernate:hibernate-core
+        versionHibernateJpa21Api            = '1.0.2.Final'     //  org.hibernate.javax.persistence:hibernate-jpa-2.1-api
+        versionImmutables                   = '2.7.5'           //  org.immutables:gson, org.immutables:value
+        versionJasypt                       = '1.9.2'           //  org.jasypt:jasypt
+        versionJavassist                    = '3.24.1-GA'       //  org.javassist:javassist
+        versionJbossSpecJavax               = '1.0.1.Final'     //  org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec, org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec
+        versionJdom                         = '2.0.2'           //  org.jdom:jdom
+        versionJson                         = '20180813'        //  org.json :json
+        versionJunitJupiterApi              = '5.5.0-M1'        //  org.junit.jupiter:junit-jupiter-api
+        versionJtsCore                      = '1.16.1'          //  org.locationtech.jts:jts-core
+        versionMariadbJavaClient            = '2.4.1'           //  org.mariadb.jdbc:mariadb-java-client
+        versionMockitoAll                   = '1.10.19'         //  org.mockito:mockito-all
+        versionMockitoCore                  = '2.25.1'          //  org.mockito:mockito-core
+        versionPowermockApiMockito2         = '2.0.0'           //  org.powermock:powermock-api-mockito2
+        versionPowermockMockitoReleaseFull  = '1.6.4'           //  org.powermock:powermock-mockito-release-full
+        versionPowermockModuleJunit4        = '2.0.0'           //  org.powermock:powermock-module-junit4
+        versionQuartz                       = '2.3.0'           //  org.quartz-scheduler:quartz, org.quartz-scheduler:quartz-jobs
+        versionSlf4j                        = '1.7.26'          //  org.slf4j:jcl-over-slf4j, org.slf4j:jul-to-slf4j, org.slf4j:slf4j-api, org.slf4j:slf4j-log4j12
+        versionSpring                       = '5.1.5.RELEASE'   //  org.springframework:spring-aop, org.springframework:spring-aspects, org.springframework:spring-context-support,
+                                                                //  org.springframework:spring-jdbc, org.springframework:spring-jms, org.springframework:spring-messaging,
+                                                                //  org.springframework:spring-orm, org.springframework:spring-tx, org.springframework:spring-web,
+                                                                //  org.springframework:spring-webmvc, org.springframework:spring-websocket
+        versionSpringBootLegacy             = '2.1.0.RELEASE'   //  org.springframework.boot:spring-boot-legacy
+        versionSpringBootStarter            = '2.1.3.RELEASE'   //  org.springframework.boot:spring-boot-starter-actuator, org.springframework.boot:spring-boot-starter-amqp,
+                                                                //  org.springframework.boot:spring-boot-starter-jetty, org.springframework.boot:spring-boot-starter-web,
+                                                                //  org.springframework.boot:spring-boot-starter-test
+        versionSql2o                        = '1.6.0'           //  org.sql2o:sql2o
+        versionTestng                       = '6.14.3'          //  org.testng:testng
+        versionJedis                        = '3.0.1'           //  redis.clients:jedis
+        versionSkewpassimage                = '1.0'             //  skewpassimage:skewpassimage
+        versionSysoutOverSlf4j              = '1.0.2'           //  uk.org.lidalia:sysout-over-slf4j
+        versionWsdl4j                       = '1.6.3'           //  wsdl4j:wsdl4j
+        versionJaxbApi                      = '2.3.1'           //  javax.xml.bind:jaxb-api
+        versionJaxbCore                     = '2.2.11'          //  com.sun.xml.bind:jaxb-core
+        versionJaxbImpl                     = '2.2.11'          //  com.sun.xml.bind:jaxb-impl
+
+        /* * * * * Versions used by Modules * * * * */
+        versionV3FasttraxCommons            = '1.1.0'
+        versionV3FasttraxServer             = '1.1.0'
+        versionV3Geofencing                 = '1.1.0'
+        versionV3HaVendors                  = '1.0'
