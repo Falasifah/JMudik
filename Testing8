@@ -1,0 +1,153 @@
+package com.firstwap.middleware.helper;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * 
+ * @author Prahasta
+ *
+ */
+
+/**
+ * This class is used as a utility class to generate
+ * message id
+ */
+public class MessageIdGenerator implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2205002768186797654L;
+	
+	public MessageIdGenerator(){
+	}
+	
+	public String generateMessageId(boolean flash){
+		
+		String flashCode = "0";
+		if(flash){
+			flashCode = "2";
+		}
+		
+		String msgId = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = new Date(System.nanoTime());
+			
+		String strDate = sdf.format(date);
+		
+		Random rand = new Random();
+		String randnum = "";
+		for(int i=1; i<=5; i++){
+			int r = 0;
+			if(i==1){
+				while(r == 0){
+					r = rand.nextInt(9);
+				}
+			} else {
+				r = rand.nextInt(9);
+			}
+			randnum += Integer.toString(r);
+		}
+//		msgId = flashCode + "GPI" + strDate + "." + randnum;
+		msgId = flashCode + "GPIAMS" + strDate + "." + randnum;
+		return msgId;
+	}
+	
+	private void checkDuplicate(List<String> list){
+		for(int i=0; i<list.size()-1; i++){
+			String str1 = list.get(i);
+			for(int j=i+1; j<list.size(); j++){
+				String str2 = list.get(j);
+				if(str1.equals(str2)){
+					System.out.println(i + " and " + j + " are the same: " + str1);
+				}
+			}
+		}
+	}
+	
+	private void dumpList(List<String> list){
+		for(int i=0; i<list.size(); i++){
+			String str = list.get(i);
+			System.out.println(str);
+		}
+	}
+	
+	private String generateMessageIdNano(){
+		String msgId = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = new Date(System.nanoTime());
+		String strDate = sdf.format(date);
+		
+		Random rand = new Random();
+		String randnum = "";
+		for(int i=1; i<=5; i++){
+			int r = 0;
+			if(i==1){
+				while(r == 0){
+					r = rand.nextInt(9);
+				}
+			} else {
+				r = rand.nextInt(9);
+			}
+			randnum += Integer.toString(r);
+		}
+		msgId = "0GPIAMS" + strDate + "." + randnum;
+		return msgId;
+	}
+	
+	private String generateMessageIdMilis(){
+		String msgId = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = new Date(System.currentTimeMillis());
+		String strDate = sdf.format(date);
+		
+		Random rand = new Random();
+		String randnum = "";
+		for(int i=1; i<=5; i++){
+			int r = 0;
+			if(i==1){
+				while(r == 0){
+					r = rand.nextInt(9);
+				}
+			} else {
+				r = rand.nextInt(9);
+			}
+			randnum += Integer.toString(r);
+		}
+		msgId = "0GPIAMS" + strDate + "." + randnum;
+		return msgId;
+	}
+	
+	private void performTest(){
+		List<String> list = new ArrayList<String>();
+		System.out.println("test milis ...");
+		for(int i=1; i<=10; i++){
+			list.add(generateMessageIdMilis());
+		}
+		
+		checkDuplicate(list);
+		
+		dumpList(list);
+		
+		list = new ArrayList<String>();
+		System.out.println("test nanos ...");
+		for(int i=1; i<=10; i++){
+			list.add(generateMessageIdNano());
+		}
+		
+		checkDuplicate(list);
+		
+		dumpList(list);
+	}
+	
+	public static void main(String[] args){
+		MessageIdGenerator mig = new MessageIdGenerator();
+		System.out.println("performing test for id generation ...");
+		mig.performTest();
+		System.out.println("id generation finished");
+	}
+}
