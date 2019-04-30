@@ -1,0 +1,5 @@
+package com.firstwap.middleware.util;
+
+public class Constants {
+	public static final int GSM0338_BASIC_CHARSET = 0;
+}
