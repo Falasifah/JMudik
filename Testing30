@@ -1,0 +1,63 @@
+package com.firstwap.middleware.ejb.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "REASON_MASTER")
+public class ReasonMaster implements Serializable {
+
+	private static final long serialVersionUID = -6027490213814922934L;
+	
+	private String errorCode;
+	private String description;
+	private String status;
+	private String recredited;
+	private String reference;
+	
+	// getters and setters
+	@Column(name = "DESCRIPTION")
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	@Id
+	@Column(name = "ERROR_CODE")
+	public String getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	
+	@Column(name = "IS_RECREDITED")
+	public String getRecredited() {
+		return recredited;
+	}
+	public void setRecredited(String recredited) {
+		this.recredited = recredited;
+	}
+	
+	@Column(name = "REFERENCE")
+	public String getReference() {
+		return reference;
+	}
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+	
+	@Column(name = "STATUS")
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+}
