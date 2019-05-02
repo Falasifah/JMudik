@@ -1,0 +1,21 @@
+karena masih belum connect ke database,
+coba bikin aplikasi 2 spring boot
+1. anggap saja buat middleware
+
+logic: dispatcher mengirim pesan 
+	diterima oleh dispatchListener
+		kirim lagi ke socket
+	
+
+
+next step adalah membuat connect ke db
+pesan itu disave ke dalam db
+next:
+buat multiple datasource
+next
+buat scheduler
+next
+buat delivery logic
+
+
+2. applikasi client ( dia yg akan mengirim pesan ke dalam queue yang sama)
