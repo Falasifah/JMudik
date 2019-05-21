@@ -1,0 +1,275 @@
+-- MySQL dump 10.16  Distrib 10.1.38-MariaDB, for Linux (x86_64)
+--
+-- Host: localhost    Database: SMS_API
+-- ------------------------------------------------------
+-- Server version	10.1.38-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `API_REPLIES`
+--
+
+DROP TABLE IF EXISTS `API_REPLIES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `API_REPLIES` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `DATESTAMP` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `VIRTUAL_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `ORIGINATING_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `SMS_TEXT` blob,
+  `STATUS` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `VNUMBER` (`VIRTUAL_NUMBER`),
+  KEY `VNUMBER_DATE` (`VIRTUAL_NUMBER`,`DATESTAMP`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `CONCATENATE_RECONCILE`
+--
+
+DROP TABLE IF EXISTS `CONCATENATE_RECONCILE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CONCATENATE_RECONCILE` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DATESTAMP` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `VIRTUAL_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `ORIGINATING_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `ENCODED_TEXT` varchar(200) DEFAULT NULL,
+  `UDHI_PRESENT` tinyint(1) DEFAULT '0',
+  `APPLICATION` varchar(20) NOT NULL DEFAULT 'NONE',
+  PRIMARY KEY (`ID`),
+  KEY `LOOKUP` (`VIRTUAL_NUMBER`,`ORIGINATING_NUMBER`,`UDHI_PRESENT`,`DATESTAMP`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `REPLACED_SENDER`
+--
+
+DROP TABLE IF EXISTS `REPLACED_SENDER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `REPLACED_SENDER` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DATESTAMP` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ORIGINATING_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `DESTINATION_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `MAPPED_VIRTUAL_NUMBER` varchar(20) NOT NULL DEFAULT '',
+  `INFO_SMS_SENT` int(1) DEFAULT NULL,
+  `TRANSACTION_ID` varchar(60) DEFAULT NULL,
+  `SMS_DIRECTION` int(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `INFO` (`DESTINATION_NUMBER`,`INFO_SMS_SENT`,`SMS_DIRECTION`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER`
+--
+
+DROP TABLE IF EXISTS `USER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER` (
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `PASSWORD` varchar(16) NOT NULL DEFAULT '',
+  `USER_STATUS` tinyint(1) NOT NULL DEFAULT '0',
+  `COUNTER` int(10) unsigned NOT NULL DEFAULT '0',
+  `CREDIT` int(11) NOT NULL DEFAULT '0',
+  `ALPHA_ENABLE` tinyint(1) NOT NULL DEFAULT '0',
+  `LAST_ACCESS` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `COMPANY_NAME` varchar(32) NOT NULL DEFAULT '',
+  `COMPANY_URL` varchar(32) DEFAULT NULL,
+  `COUNTRY_CODE` char(2) NOT NULL DEFAULT '',
+  `CONTACT_NAME` varchar(16) DEFAULT NULL,
+  `CONTACT_EMAIL` varchar(32) DEFAULT NULL,
+  `CONTACT_PHONE` varchar(16) DEFAULT NULL,
+  `CREATE_DATE` date NOT NULL DEFAULT '0000-00-00',
+  `CREATED_BY` varchar(16) NOT NULL DEFAULT '',
+  `INFORMATION` text,
+  PRIMARY KEY (`USER_ID`),
+  KEY `USER` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_ACCESS_LOG`
+--
+
+DROP TABLE IF EXISTS `USER_ACCESS_LOG`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_ACCESS_LOG` (
+  `USER_ACCESS_LOG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `ACCESS_FROM_IP` varchar(16) NOT NULL DEFAULT '000.000.000.000',
+  `ACCESS_TIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`USER_ACCESS_LOG_ID`),
+  KEY `USER_ID` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_IP`
+--
+
+DROP TABLE IF EXISTS `USER_IP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_IP` (
+  `USER_IP_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `IP_NUMBER` varchar(16) NOT NULL DEFAULT '000.000.000.000',
+  PRIMARY KEY (`USER_IP_ID`),
+  KEY `USER_IP` (`USER_ID`,`IP_NUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_MESSAGE_PROC`
+--
+
+DROP TABLE IF EXISTS `USER_MESSAGE_PROC`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_MESSAGE_PROC` (
+  `MESSAGE_ID` varchar(64) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `MESSAGE` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_MESSAGE_STATUS`
+--
+
+DROP TABLE IF EXISTS `USER_MESSAGE_STATUS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_MESSAGE_STATUS` (
+  `MESSAGE_ID` varchar(64) NOT NULL DEFAULT '',
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `SENDER` varchar(16) NOT NULL DEFAULT '',
+  `DESTINATION` varchar(16) NOT NULL DEFAULT '',
+  `SEND_DATETIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `MESSAGE_STATUS` varchar(16) NOT NULL DEFAULT '',
+  `STATUS_DATETIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`MESSAGE_ID`,`USER_ID`),
+  UNIQUE KEY `id` (`id`),
+  KEY `USER_MESSAGE_STATUS` (`MESSAGE_ID`,`USER_ID`,`SEND_DATETIME`)
+) ENGINE=InnoDB AUTO_INCREMENT=10513294 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_MESSAGE_WORK`
+--
+
+DROP TABLE IF EXISTS `USER_MESSAGE_WORK`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_MESSAGE_WORK` (
+  `MESSAGE_ID` varchar(64) CHARACTER SET latin1 DEFAULT NULL,
+  `MESSAGE` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  PRIMARY KEY (`MESSAGE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_REPLY_CONFIG`
+--
+
+DROP TABLE IF EXISTS `USER_REPLY_CONFIG`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_REPLY_CONFIG` (
+  `USER_REPLY_CONFIG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `VIRTUAL_NUMBER` varchar(16) NOT NULL DEFAULT '',
+  `URL` varchar(100) NOT NULL DEFAULT '',
+  `START_DATE` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `END_DATE` datetime NOT NULL DEFAULT '2050-01-01 00:00:00',
+  `EMAIL_ADDRESS` varchar(100) DEFAULT 'NONE',
+  PRIMARY KEY (`USER_REPLY_CONFIG_ID`),
+  KEY `LOOKUP` (`VIRTUAL_NUMBER`,`START_DATE`,`END_DATE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `USER_TRANSACTION`
+--
+
+DROP TABLE IF EXISTS `USER_TRANSACTION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USER_TRANSACTION` (
+  `TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(16) NOT NULL DEFAULT '',
+  `CREDIT` int(11) NOT NULL DEFAULT '0',
+  `AMOUNT` int(10) unsigned NOT NULL DEFAULT '0',
+  `CURRENCY` varchar(6) NOT NULL DEFAULT '',
+  `IS_PAID` tinyint(1) NOT NULL DEFAULT '0',
+  `REQUESTED_BY` varchar(16) NOT NULL DEFAULT '',
+  `CREATED_BY` varchar(16) NOT NULL DEFAULT '',
+  `CREATE_DATETIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `PAYMENT_METHOD` varchar(16) DEFAULT NULL,
+  `INFORMATION` text,
+  PRIMARY KEY (`TRANSACTION_ID`,`USER_ID`),
+  KEY `USER_TRANSACTION` (`TRANSACTION_ID`,`USER_ID`,`CREATE_DATETIME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `messagestatus`
+--
+
+DROP TABLE IF EXISTS `messagestatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messagestatus` (
+  `msgid` varchar(64) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `sender` varchar(16) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `target` varchar(16) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `status` varchar(16) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `statustime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`msgid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `testing`
+--
+
+DROP TABLE IF EXISTS `testing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `testing` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-21 10:45:19
