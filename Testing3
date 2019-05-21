@@ -1,0 +1,62 @@
+#smsdisp.jdbc.driver=${global.database.diverClassName}
+#smsdisp.jdbc.url=${database.smsdispatcher.url}
+#smsdisp.jdbc.username=${global.database.username}
+#smsdisp.jdbc.password=${global.database.password}
+
+#smsapi.jdbc.driver=${global.database.diverClassName}
+#smsapi.jdbc.url=${database.smsapi.url}
+#smsapi.jdbc.username=${global.database.username}
+#smsapi.jdbc.password=${global.database.password}
+
+# this is the properties of sms dispatcher
+#hostqueuelatin=${global.queue.address}
+#portqueuelatin=${global.qlatin.port}
+#hostqueueunicode=${global.queue.address}
+#portqueueunicode=${global.qunicode.port}
+
+server.port=3311
+
+hostqueuelatin=queue.umi.ams
+portqueuelatin=2034
+hostqueueunicode=queue.umi.ams
+portqueueunicode=2035
+
+dispatchlimit=100
+deliverylimit=100
+
+servername=MIDSERV-1
+jobthreshold=600
+
+senderformating=true
+senderadditionalchar=A
+
+use.cobrander=false
+cobrander.name=
+mobiletrax.serviceid.name=
+mobiletrax.replypath=0
+mobiletrax.alphaflag=2
+
+
+#SMS DISPATCHER
+smsdisp.jdbc.driver=com.mysql.cj.jdbc.Driver
+smsdisp.jdbc.url=jdbc:mysql://db.umi.ams:3306/SMSDISPATCHER?autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
+smsdisp.jdbc.username=dev
+smsdisp.jdbc.password=1rstwap
+
+#SMS API
+smsapi.jdbc.driver=com.mysql.cj.jdbc.Driver
+smsapi.jdbc.url=jdbc:mysql://db.umi.ams:3306/SMS_API?autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
+smsapi.jdbc.username=dev
+smsapi.jdbc.password=1rstwap
+
+
+smsQueuedSuffix=|QUEUED
+
+schedule.delivery.cron=0/10 * * * * ?
+schedule.dispatch.cron=0/10 * * * * ?
+
+GSM0338.Charset=0
+
+
+spring.main.allow-bean-definition-overriding=true
+hibernate.bytecode.use_reflection_optimizer=false
