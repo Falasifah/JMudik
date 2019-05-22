@@ -1,0 +1,146 @@
+https://stackoverflow.com/questions/43633259/why-my-service-always-return-null-in-implementation-class
+
+https://stackoverflow.com/questions/19896870/why-is-my-spring-autowired-field-null
+
+
+
+package com.firstwap.ams.service.middleware;
+
+import com.firstwap.ams.service.middleware.ejb.listener.DeliveryListener;
+import com.firstwap.ams.service.middleware.ejb.listener.DispatchErrorListener;
+import com.firstwap.ams.service.middleware.ejb.listener.DispatchListener;
+import com.rabbitmq.jms.admin.RMQConnectionFactory;
+import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.orm.jpa.HibernateMetricsAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jms.listener.MessageListenerContainer;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
+
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+@ImportResource({"classpath:applicationContext.xml"})
+@EnableAutoConfiguration(exclude = {HibernateMetricsAutoConfiguration.class})
+@ComponentScan(basePackages = {"com.firstwap.ams.service.middleware"})
+public class MiddlewareStarter implements TransactionManagementConfigurer
+{
+
+    private static final Logger log = LoggerFactory.getLogger(MiddlewareStarter.class);
+
+
+    @Bean
+    public DataSource dBServiceAltamidesSource ()
+    {
+        final HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setUsername("dev");
+        dataSource.setPassword("1rstwap");
+        dataSource.setJdbcUrl("jdbc:mysql://db.umi.ams:3306/");
+        dataSource.setMaximumPoolSize(30);
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        return dataSource;
+    }
+
+//    @Bean
+//    public RMQConnectionFactory connectionFactory() {
+//        RMQConnectionFactory connectionFactory = new RMQConnectionFactory();
+//        connectionFactory.setUsername("app");
+//        connectionFactory.setPassword("1rstwap");
+//        connectionFactory.setVirtualHost("/");
+//        connectionFactory.setHost("db.umi.ams");
+//        connectionFactory.setPort(5672);
+//        return connectionFactory;
+//    }
+//
+//    @Bean
+//    public RMQDestination deliveryQueue() {
+//        RMQDestination jmsDestination = new RMQDestination();
+//        jmsDestination.setDestinationName("deliveryQueue");
+//        jmsDestination.setAmqp(true);
+//        jmsDestination.setAmqpQueueName("middleware-service");
+//        return jmsDestination;
+//    }
+//
+//    @Bean
+//    public RMQDestination dispatchErrorQueue() {
+//        RMQDestination jmsDestination = new RMQDestination();
+//        jmsDestination.setDestinationName("dispatchErrorQueue");
+//        jmsDestination.setAmqp(true);
+//        jmsDestination.setAmqpQueueName("middleware-service");
+//        return jmsDestination;
+//    }
+
+    @Bean
+    public RMQConnectionFactory jmsConnectionFactory() {
+        RMQConnectionFactory connectionFactory = new RMQConnectionFactory();
+        connectionFactory.setUsername("app");
+        connectionFactory.setPassword("1rstwap");
+        connectionFactory.setVirtualHost("/");
+        connectionFactory.setHost("db.umi.ams");
+
+        return connectionFactory;
+    }
+
+
+    @Bean
+    public MessageListenerContainer dispatchListenerContainer() throws NamingException
+    {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(jmsConnectionFactory());
+        container.setDestinationName("dispatchQueue");
+        container.setMessageListener(new DispatchListener());
+        return container;
+
+    }
+
+    @Bean
+    public MessageListenerContainer dispatchErrorListenerContainer() throws NamingException
+    {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(jmsConnectionFactory());
+        container.setDestinationName("dispatchErrorQueue");
+        container.setMessageListener(new DispatchErrorListener());
+        return container;
+
+    }
+
+    @Bean
+    public MessageListenerContainer deliveryListenerContainer() throws NamingException
+    {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(jmsConnectionFactory());
+        container.setDestinationName("deliveryQueue");
+        container.setMessageListener(new DeliveryListener());
+        return container;
+
+    }
+
+    @Bean
+    public PlatformTransactionManager txManager()
+    {
+        return new DataSourceTransactionManager(dBServiceAltamidesSource());
+    }
+
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager()
+    {
+        return txManager();
+    }
+
+
+    public static void main(String[] args)
+    {
+        SpringApplication.run(MiddlewareStarter.class, args);
+    }
+}
+
+
+
